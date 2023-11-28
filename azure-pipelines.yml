@@ -46,4 +46,4 @@ steps:
       nuGetFeedType: "internal"
       publishVstsFeed: "TestFeed"
       allowPackageConflicts: true
-      arguments: "push $(Build.ArtifactStagingDirectory)\\*.nupkg -ApiKey  -Source https://filestar-nuget-server.azurewebsites.net/nuget"
+      arguments: "push $(Build.ArtifactStagingDirectory)\\*.nupkg -ApiKey $(NugetApiKey) -Source https://filestar-nuget-server.azurewebsites.net/nuget"
