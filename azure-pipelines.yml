@@ -1,0 +1,49 @@
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - LnkReader/*
+      - azure-pipelines.yml
+
+pool:
+  vmImage: "windows-2022"
+
+# variables:
+#  PackageVersion: "1.0.2"
+
+steps:
+  # The first task is the dotnet command build, pointing to our csproj file
+  - task: DotNetCoreCLI@2
+    displayName: "dotnet build"
+    inputs:
+      command: "build"
+      arguments: "--configuration Release"
+      projects: "LnkReader/LnkReader.csproj"
+
+  - task: DotNetCoreCLI@2
+    displayName: "dotnet pack"
+    inputs:
+      command: "pack"
+      configuration: Release
+      packagesToPack: "LnkReader/LnkReader.csproj"
+      nobuild: true
+      # versioningScheme: "byEnvVar"
+      # versionEnvVar: PackageVersion
+
+  - task: CmdLine@2
+    displayName: "diagnostics nuget"
+    inputs:
+      script: |
+        dir $(Build.ArtifactStagingDirectory)
+
+  - task: NuGetCommand@2
+    displayName: "nuget push"
+    inputs:
+      command: "custom"
+      feedsToUse: "select"
+      nuGetFeedType: "internal"
+      publishVstsFeed: "TestFeed"
+      allowPackageConflicts: true
+      arguments: "push $(Build.ArtifactStagingDirectory)\\*.nupkg -ApiKey  -Source https://filestar-nuget-server.azurewebsites.net/nuget"
