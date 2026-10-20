@@ -92,7 +92,7 @@
 param(
     [switch]$Execute,
     [switch]$AllowUnpushed,
-    [string]$FeedUrl = 'https://filestar-nugets.sliplane.app',
+    [string]$FeedUrl = 'https://nuget.filestar.com',
     [string]$DopbaseEnv = 'filestar-tools/production',
     [string]$DopbaseCommand = 'dopbase-filestar',
     [switch]$NoDopbase
