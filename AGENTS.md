@@ -5,7 +5,7 @@ Keep this file current.
 ## Publishing
 
 The NuGet package `LnkReader.Net6` is published only by `./Publish.ps1` (dry run) then `./Publish.ps1 -Execute`, to the
-Sliplane feed `filestar-nugets.sliplane.app`, which `filestar/Filestar` restores from. It packs the commit on
+Sliplane feed `nuget.filestar.com`, which `filestar/Filestar` restores from. It packs the commit on
 `origin/master`, never the working tree, refuses a version already on the feed, and reads the package back to
 compare hashes. The push key comes from Dopbase `filestar-tools/production`.
 
